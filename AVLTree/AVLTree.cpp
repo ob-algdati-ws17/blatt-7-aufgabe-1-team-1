@@ -29,6 +29,13 @@ void AVLTree::insert( const int k )
         root->insert( k );
 }
 
+void AVLTree::remove( const int k )
+{
+    if( root != nullptr )
+        root->remove( k );
+
+}
+
 
 bool AVLTree::checkStructure()
 {
@@ -139,6 +146,36 @@ bool AVLTree::Node::insert( const int k )
     }
 
     return false;
+}
+
+bool AVLTree::Node::remove( const int k )
+{
+    if( k < key )
+    {
+        if( left != nullptr )
+            left->remove( k );
+
+    }
+    else if( k > key )
+    {
+        if( right != nullptr )
+            right->remove( k );
+    }
+    else
+    {
+        if( left == nullptr && right == nullptr )
+        {
+
+        }
+        else if( left != nullptr && right != nullptr)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 }
 
 

@@ -25,6 +25,7 @@ class AVLTree
 
         bool find ( const int ) const;
         bool insert( const int );
+        bool remove( const int );
 
 
         void rotateRight();
@@ -43,6 +44,7 @@ public:
 
     bool find( const int ) const;
     void insert( const int );
+    void remove( const int );
 
     bool checkStructure();
 };
