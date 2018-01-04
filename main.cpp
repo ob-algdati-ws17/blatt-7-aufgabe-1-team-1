@@ -9,37 +9,25 @@
 
 int main()
 {
-    /*
-    srand(1380550327);
     AVLTree t;
-    for( int i = 0; i < 10000; i++)
-    {
-        int r = rand();
-        std::cout << "Insert: " << r << std::endl;
-        t.insert( r );
-        if(!t.checkStructure())
-            std::cout << "fail" << std::endl;
-    }
-    */
 
+    t.insert( 1 );
+    t.insert( 5 );
+    t.insert( 7 );
+    t.insert( 8 );
+    t.insert( 12 );
+    t.insert( 6 );
+    t.insert( 17 );
+    t.insert( 18 );
+    t.insert( 12 );
+    t.insert( 31 );
+    t.insert( 22 );
+    t.insert( 41 );
 
-    srand(12345);
-    for( int i = 0; i < 1000000; i++)
-    {
-        int seed = rand();
-        std::cout << "Test: " << i << " with seed " << seed << std::endl;
-        srand(seed);
-        AVLTree t;
-        for( int i = 0; i < 10000; i++)
-        {
-            int r = rand();
-            t.insert( r );
-            if(!t.checkStructure()) {
-                std::cout << "fail" << std::endl;
-                exit(1);
-            }
-        }
-    }
+    std::cout << t.find( 1 ) << std::endl;
+    std::cout << t.find( 5 ) << std::endl;
+    std::cout << t.find( 23 ) << std::endl;
+    std::cout << t.find( 24 ) << std::endl;
 
 
     std::cout << "Hello World" << std::endl;

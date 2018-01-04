@@ -23,7 +23,9 @@ class AVLTree
         Node( const int );
         ~Node();
 
+        bool find ( const int ) const;
         bool insert( const int );
+
 
         void rotateRight();
         void rotateLeftRight();
@@ -39,6 +41,7 @@ class AVLTree
 public:
     ~AVLTree();
 
+    bool find( const int ) const;
     void insert( const int );
 
     bool checkStructure();
