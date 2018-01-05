@@ -9,26 +9,23 @@
 
 int main()
 {
-    AVLTree t;
 
-    t.insert( 1 );
-    t.insert( 5 );
-    t.insert( 7 );
-    t.insert( 8 );
-    t.insert( 12 );
-    t.insert( 6 );
-    t.insert( 17 );
-    t.insert( 18 );
-    t.insert( 12 );
-    t.insert( 31 );
-    t.insert( 22 );
-    t.insert( 41 );
 
-    std::cout << t.find( 1 ) << std::endl;
-    std::cout << t.find( 5 ) << std::endl;
-    std::cout << t.find( 23 ) << std::endl;
-    std::cout << t.find( 24 ) << std::endl;
 
+    for( int i = 0; i < 1000; i++ )
+    {
+        AVLTree t;
+        for( int j = 0; j < 10000; j++)
+        {
+            t.insert( rand() % 1000 );
+        }
+
+        for( int i = 0; i < 10000; i++ )
+        {
+            t.remove( i );
+            std::cout << t.checkStructure() << std::endl;
+        }
+    }
 
     std::cout << "Hello World" << std::endl;
 }

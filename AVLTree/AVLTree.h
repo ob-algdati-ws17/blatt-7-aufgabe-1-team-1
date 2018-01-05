@@ -10,7 +10,7 @@ class AVLTree
 {
     struct Node
     {
-        const int key;
+        int key;
 
         int balance = 0;
 
@@ -28,12 +28,18 @@ class AVLTree
         bool remove( const int );
 
 
-        void rotateRight();
+        void rotateRight( int, int );
         void rotateLeftRight();
-        void rotateLeft();
+        void rotateLeft( int, int );
         void rotateRightLeft();
 
+        int findMax();
+        bool balanceLeft();
+        bool balanceRight();
+
+
         bool checkStructure( int *, int *, int * );
+
 
     };
 

@@ -92,7 +92,7 @@ bool AVLTree::Node::insert( const int k )
                 {
                     if(left->balance == -1)
                     {
-                        rotateRight();
+                        rotateRight( 0, 0 );
                         return false;
                     }
                     else
@@ -126,7 +126,7 @@ bool AVLTree::Node::insert( const int k )
                 {
                     if(right->balance == 1)
                     {
-                        rotateLeft();
+                        rotateLeft( 0, 0 );
                         return false;
                     }
                     else
@@ -153,33 +153,68 @@ bool AVLTree::Node::remove( const int k )
     if( k < key )
     {
         if( left != nullptr )
-            left->remove( k );
+        {
+            if( left->remove( k ) )
+            {
+                return balanceLeft();
+            }
+        }
+
 
     }
     else if( k > key )
     {
         if( right != nullptr )
-            right->remove( k );
+        {
+            if( right->remove( k ) )
+            {
+                return balanceRight();
+            }
+        }
+
     }
     else
     {
         if( left == nullptr && right == nullptr )
         {
-
+            *selfPointer = nullptr;
+            delete this;
+            return true;
         }
         else if( left != nullptr && right != nullptr)
         {
-
+            int leftMax = left->findMax();
+            key = leftMax;
+            if( left->remove( leftMax ) )
+            {
+                return balanceLeft();
+            }
         }
         else
         {
-
+            if(left != nullptr )
+            {
+                left->selfPointer = selfPointer;
+                *selfPointer = left;
+                left = nullptr;
+                delete this;
+                return true;
+            }
+            else
+            {
+                right->selfPointer = selfPointer;
+                *selfPointer = right;
+                right = nullptr;
+                delete this;
+                return true;
+            }
         }
     }
+
 }
 
 
-void AVLTree::Node::rotateRight()
+void AVLTree::Node::rotateRight( int b, int bC )
 {
     Node *child = left;
     left = child->right;
@@ -189,8 +224,8 @@ void AVLTree::Node::rotateRight()
     if(left != nullptr )
         left->selfPointer = &left;
     selfPointer = &child->right;
-    balance = 0;
-    child->balance = 0;
+    balance = b;
+    child->balance = bC;
 }
 
 void AVLTree::Node::rotateLeftRight()
@@ -233,7 +268,7 @@ void AVLTree::Node::rotateLeftRight()
 
 }
 
-void AVLTree::Node::rotateLeft()
+void AVLTree::Node::rotateLeft( int b, int bC )
 {
     Node *child = right;
     right = child->left;
@@ -243,8 +278,8 @@ void AVLTree::Node::rotateLeft()
     if(right != nullptr )
         right->selfPointer = &right;
     selfPointer = &child->left;
-    balance = 0;
-    child->balance = 0;
+    balance = b;
+    child->balance = bC;
 }
 
 void AVLTree::Node::rotateRightLeft()
@@ -284,6 +319,61 @@ void AVLTree::Node::rotateRightLeft()
     grandChild->balance = 0;
 
 
+}
+
+int AVLTree::Node::findMax()
+{
+    if(right == nullptr)
+        return key;
+    return right->findMax();
+}
+
+bool AVLTree::Node::balanceLeft()
+{
+    if( balance == 1 )
+    {
+        switch(right->balance)
+        {
+            case -1:
+                rotateRightLeft();
+                return true;
+            case 0:
+                rotateLeft( 1, -1 );
+                return false;
+            case 1:
+                rotateLeft( 0, 0 );
+                return true;
+        }
+    }
+    else
+    {
+        balance++;
+        return !(bool) balance;
+    }
+}
+
+bool AVLTree::Node::balanceRight()
+{
+    if( balance == -1 )
+    {
+        switch(left->balance)
+        {
+            case 1:
+                rotateLeftRight();
+                return true;
+            case 0:
+                rotateRight( -1, 1 );
+                return false;
+            case -1:
+                rotateRight( 0, 0 );
+                return true;
+        }
+    }
+    else
+    {
+        balance--;
+        return !(bool) balance;
+    }
 }
 
 
@@ -344,3 +434,4 @@ bool AVLTree::Node::checkStructure( int *height, int *min, int *max ) {
     (*height)++;
     return true;
 }
+
