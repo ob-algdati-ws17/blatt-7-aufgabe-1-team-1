@@ -43,7 +43,26 @@ bool AVLTree::checkStructure()
     return root->checkStructure( &tmp, &tmp, &tmp );
 }
 
+std::vector<int> *AVLTree::preorder() const
+{
+    if (root == nullptr)
+        return nullptr;
+    return root->preorder();
+}
 
+std::vector<int> *AVLTree::inorder() const
+{
+    if (root == nullptr)
+        return nullptr;
+    return root->inorder();
+}
+
+std::vector<int> *AVLTree::postorder() const
+{
+    if (root == nullptr)
+        return nullptr;
+    return root->postorder();
+}
 
 
 AVLTree::Node::Node( const int k ) : key(k) {}
@@ -433,5 +452,52 @@ bool AVLTree::Node::checkStructure( int *height, int *min, int *max ) {
 
     (*height)++;
     return true;
+}
+
+std::vector<int> *AVLTree::Node::preorder() const
+{
+    std::vector<int> *vec = new std::vector<int>();
+    vec->push_back(key);
+    if (left != nullptr) {
+        std::vector<int> *left_vec = left->preorder();
+        vec->insert(vec->end(), left_vec->begin(), left_vec->end());
+    }
+    if (right != nullptr) {
+        std::vector<int> *right_vec = right->preorder();
+        vec->insert(vec->end(), right_vec->begin(), right_vec->end());
+    }
+    return vec;
+}
+
+std::vector<int> *AVLTree::Node::inorder() const
+{
+    std::vector<int> *vec = new std::vector<int>();
+
+    if (left != nullptr) {
+        std::vector<int> *left_vec = left->inorder();
+        vec->insert(vec->end(), left_vec->begin(), left_vec->end());
+    }
+    vec->push_back(key);
+    if (right != nullptr) {
+        std::vector<int> *right_vec = right->inorder();
+        vec->insert(vec->end(), right_vec->begin(), right_vec->end());
+    }
+    return vec;
+}
+
+std::vector<int> *AVLTree::Node::postorder() const
+{
+    std::vector<int> *vec = new std::vector<int>();
+
+    if (left != nullptr) {
+        std::vector<int> *left_vec = left->postorder();
+        vec->insert(vec->end(), left_vec->begin(), left_vec->end());
+    }
+    if (right != nullptr) {
+        std::vector<int> *right_vec = right->postorder();
+        vec->insert(vec->end(), right_vec->begin(), right_vec->end());
+    }
+    vec->push_back(key);
+    return vec;
 }
 

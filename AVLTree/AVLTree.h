@@ -5,6 +5,8 @@
 #ifndef AVLTREE_AVLTREE_H
 #define AVLTREE_AVLTREE_H
 
+#include <vector>
+
 
 class AVLTree
 {
@@ -39,6 +41,9 @@ class AVLTree
 
 
         bool checkStructure( int *, int *, int * );
+        std::vector<int> *preorder() const; // (Hauptreihenfolge)
+        std::vector<int> *inorder() const; // (Symmetrische Reihenfolge)
+        std::vector<int> *postorder() const; // (Nebenreihenfolge)
 
 
     };
@@ -53,6 +58,9 @@ public:
     void remove( const int );
 
     bool checkStructure();
+    std::vector<int> *preorder() const; // (Hauptreihenfolge)
+    std::vector<int> *inorder() const; // (Symmetrische Reihenfolge)
+    std::vector<int> *postorder() const; // (Nebenreihenfolge)
 };
 
 
